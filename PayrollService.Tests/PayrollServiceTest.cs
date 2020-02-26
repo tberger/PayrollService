@@ -43,5 +43,20 @@ namespace PayrollService.Tests
             // Assert
             Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<IncomeInformation>));
         }
+
+        [TestMethod]
+        [DataRow("FRA")]
+        [DataRow("BEL")]
+        public void PayrollService_ShouldOnlyAcceptThreeCountryCodes(string countryCode)
+        {
+            // Arrange
+            var controller = new PayrollServiceController();
+
+            // Acr
+            var result = controller.Get(countryCode, 10m, 10m);
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(BadRequestErrorMessageResult));
+        }
     }
 }
