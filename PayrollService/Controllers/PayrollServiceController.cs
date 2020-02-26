@@ -35,12 +35,35 @@ namespace PayrollService.Controllers
             {
                 taxesDeduction = this.CalculateSpainTaxesDeduction(hourlyRate, hoursWorked);
             }
+            else if (countryCode.Equals("ITA"))
+            {
+                taxesDeduction = this.ClculateItalianTaxesDeduction(hourlyRate, hoursWorked);
+            }
             return Ok(new IncomeInformation
             {
                 CountryCode = countryCode,
                 GrossIncome = _grossIncomeCalculator.Calculate(hoursWorked, hourlyRate),
                 TaxesDeduction = taxesDeduction
             });
+        }
+
+        private decimal ClculateItalianTaxesDeduction(decimal hourlyRate, decimal hoursWorked)
+        {
+            var grossIncome = _grossIncomeCalculator.Calculate(hourlyRate, hoursWorked);
+            var tax = this.CalculateItalianTax(grossIncome);
+            var inps = this.CalculateItalianInps(grossIncome);
+
+            return tax + inps;
+        }
+
+        private decimal CalculateItalianTax(decimal grossIncome)
+        {
+            return grossIncome * 0.25m;
+        }
+
+        private decimal CalculateItalianInps(decimal grossIncome)
+        {
+            return grossIncome * 0.0919m;
         }
 
         private decimal CalculateSpainTaxesDeduction(decimal hourlyRate, decimal hoursWorked)
