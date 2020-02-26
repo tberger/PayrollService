@@ -21,7 +21,10 @@ namespace PayrollService.Controllers
             {
                 return BadRequest($"Only {string.Join(", ", _countryCodes)} country codes are supported");
             }
-            return Ok(new IncomeInformation());
+            return Ok(new IncomeInformation
+            {
+                CountryCode = countryCode
+            });
         }
     }
 }

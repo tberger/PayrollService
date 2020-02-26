@@ -58,5 +58,21 @@ namespace PayrollService.Tests
             // Assert
             Assert.IsInstanceOfType(result, typeof(BadRequestErrorMessageResult));
         }
+
+        [TestMethod]
+        [DataRow("DEU")]
+        [DataRow("ITA")]
+        [DataRow("ESP")]
+        public void PayrollService_ShouldReturnGivenCountryCode(string countryCode)
+        {
+            // Arrange
+            var controller = new PayrollServiceController();
+
+            // Acr
+            var result = controller.Get(countryCode, 10m, 10m) as OkNegotiatedContentResult<IncomeInformation>;
+
+            // Assert
+            Assert.AreEqual(countryCode, result.Content.CountryCode);
+        }
     }
 }
