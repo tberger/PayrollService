@@ -195,5 +195,38 @@ namespace PayrollService.Tests
             // Assert
             Assert.AreEqual((decimal)expectedTaxesDecuction, result.Content.TaxesDeduction);
         }
+
+        /// <summary>
+        /// 10 hoursWorked, 10 hourlyRate:
+        /// grossIncome = 100,
+        /// tax = 25
+        /// pension = 2
+        /// 
+        /// 30 hoursWorked, 20 hourlyRate:
+        /// grossIncome = 600,
+        /// tax = (400*0,25)100 + (200*0,32)64
+        /// pension = 600 * 0,02 = 12
+        /// </summary>
+        /// <param name="hoursWorked"></param>
+        /// <param name="hourlyRate"></param>
+        /// <param name="expectedTaxesDecuction"></param>
+        [TestMethod]
+        [DataRow(10, 10, 27)]
+        [DataRow(30, 20, 176)]
+        public void PayrollService_SouldCalculateGermanTaxRates(
+            double hoursWorked,
+            double hourlyRate,
+            double expectedTaxesDecuction)
+        {
+            // Arrange
+            var controller = PayrollServiceController;
+
+            // Acr
+            var result = controller.Get("DEU", (decimal)hoursWorked, (decimal)hourlyRate)
+                as OkNegotiatedContentResult<IncomeInformation>;
+
+            // Assert
+            Assert.AreEqual((decimal)expectedTaxesDecuction, result.Content.TaxesDeduction);
+        }
     }
 }
