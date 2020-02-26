@@ -1,4 +1,5 @@
 ﻿using PayrollService.Models;
+using PayrollService.Services.Interfaces;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -8,6 +9,13 @@ namespace PayrollService.Controllers
     public class PayrollServiceController : ApiController
     {
         private static readonly string[] _countryCodes = new string[] { "DEU", "ITA", "ESP" };
+        private readonly IGrossIncomeCalculator _grossIncomeCalculator;
+
+        public PayrollServiceController(
+            IGrossIncomeCalculator grossIncomeCalculator)
+        {
+            _grossIncomeCalculator = grossIncomeCalculator;
+        }
 
         [HttpGet]
         [Route("api/PayrollService/{countryCode}")]
@@ -24,7 +32,7 @@ namespace PayrollService.Controllers
             return Ok(new IncomeInformation
             {
                 CountryCode = countryCode,
-                GrossIncome = hourlyRate * hoursWorked
+                GrossIncome = _grossIncomeCalculator.Calculate(hoursWorked, hourlyRate)
             });
         }
     }

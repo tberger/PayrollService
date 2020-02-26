@@ -1,6 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Autofac;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PayrollService.Controllers;
 using PayrollService.Models;
+using PayrollService.Services;
+using PayrollService.Services.Interfaces;
 using System.Web.Http.Results;
 
 namespace PayrollService.Tests
@@ -8,11 +11,39 @@ namespace PayrollService.Tests
     [TestClass]
     public class PayrollServiceTest
     {
+        private IContainer _autofacContainer;
+        protected IContainer AutofacContainer
+        {
+            get
+            {
+                if (_autofacContainer == null)
+                {
+                    var builder = new ContainerBuilder();
+                    builder.RegisterType<PayrollServiceController>().As<PayrollServiceController>();
+                    builder.RegisterType<GrossIncomeCalculator>().As<IGrossIncomeCalculator>();
+
+                    var container = builder.Build();
+
+                    _autofacContainer = container;
+                }
+
+                return _autofacContainer;
+            }
+        }
+
+        protected PayrollServiceController PayrollServiceController
+        {
+            get
+            {
+                return AutofacContainer.Resolve<PayrollServiceController>();
+            }
+        }
+
         [TestMethod]
         public void PayrollService_ShouldExist()
         {
             // Arrange
-            var controller = new PayrollServiceController();
+            var controller = PayrollServiceController;
 
             // Assert
             Assert.IsNotNull(controller);
@@ -22,7 +53,7 @@ namespace PayrollService.Tests
         public void PayrollService_ShouldHaveAGetMethod()
         {
             // Arrange
-            var controller = new PayrollServiceController();
+            var controller = PayrollServiceController;
 
             // Acr
             var result = controller.Get("DEU", 10m, 10m);
@@ -35,7 +66,7 @@ namespace PayrollService.Tests
         public void PayrollService_ShouldReturnCorrectType()
         {
             // Arrange
-            var controller = new PayrollServiceController();
+            var controller = PayrollServiceController;
 
             // Acr
             var result = controller.Get("DEU", 10m, 10m) ;
@@ -50,7 +81,7 @@ namespace PayrollService.Tests
         public void PayrollService_ShouldOnlyAcceptThreeCountryCodes(string countryCode)
         {
             // Arrange
-            var controller = new PayrollServiceController();
+            var controller = PayrollServiceController;
 
             // Acr
             var result = controller.Get(countryCode, 10m, 10m);
@@ -66,7 +97,7 @@ namespace PayrollService.Tests
         public void PayrollService_ShouldReturnGivenCountryCode(string countryCode)
         {
             // Arrange
-            var controller = new PayrollServiceController();
+            var controller = PayrollServiceController;
 
             // Acr
             var result = controller.Get(countryCode, 10m, 10m) as OkNegotiatedContentResult<IncomeInformation>;
@@ -85,7 +116,7 @@ namespace PayrollService.Tests
             double expectedGrossIncome)
         {
             // Arrange
-            var controller = new PayrollServiceController();
+            var controller = PayrollServiceController;
 
             // Acr
             var result = controller.Get("DEU", (decimal)hoursWorked, (decimal)hourlyRate) 
