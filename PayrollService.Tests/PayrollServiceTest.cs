@@ -125,5 +125,40 @@ namespace PayrollService.Tests
             // Assert
             Assert.AreEqual((decimal)expectedGrossIncome, result.Content.GrossIncome);
         }
+
+        /// <summary>
+        /// 10 hoursWorked, 10 hourlyRate:
+        /// grossIncome = 100,
+        /// tax = 25
+        /// social charge = 7
+        /// pension contribution = 4
+        /// 
+        /// 30 hoursWorked, 20 hourlyRate:
+        /// grossIncome = 600,
+        /// tax = 600 * 0,25 = 150
+        /// social charge = (500 * 0,07)35 + (100 * 0,08)8
+        /// pension contribution = (600 * 0,04)24
+        /// </summary>
+        /// <param name="hoursWorked"></param>
+        /// <param name="hourlyRate"></param>
+        /// <param name="expectedTaxesDecuction"></param>
+        [TestMethod]
+        [DataRow(10, 10, 36)]
+        [DataRow(30, 20, 217)]
+        public void PayrollService_SouldCalculateSpanishTaxRates(
+            double hoursWorked,
+            double hourlyRate,
+            double expectedTaxesDecuction)
+        {
+            // Arrange
+            var controller = PayrollServiceController;
+
+            // Acr
+            var result = controller.Get("ESP", (decimal)hoursWorked, (decimal)hourlyRate)
+                as OkNegotiatedContentResult<IncomeInformation>;
+
+            // Assert
+            Assert.AreEqual((decimal)expectedTaxesDecuction, result.Content.TaxesDeduction);
+        }
     }
 }
