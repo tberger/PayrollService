@@ -2,6 +2,7 @@
 
 Some example evaluation task.
 
-Started 26.02.2020
+Started 26.02.2020 20:00
 
-Should not take longer than two hours.
+Ended 26.02.2020 22:03
+
