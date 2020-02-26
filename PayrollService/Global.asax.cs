@@ -30,7 +30,8 @@ namespace PayrollService
             var builder = new ContainerBuilder();
             var config = GlobalConfiguration.Configuration;
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-            builder.RegisterType<GrossIncomeCalculator>().As<IGrossIncomeCalculator>();
+            builder.RegisterType<IncomeCalculator>().As<IGrossIncomeCalculator>();
+            builder.RegisterType<IncomeCalculator>().As<ITaxesDeductionCalculator>();
             var container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }

@@ -107,8 +107,9 @@
     </Compile>
     <Compile Include="Models\IncomeInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\GrossIncomeCalculator.cs" />
+    <Compile Include="Services\IncomeCalculator.cs" />
     <Compile Include="Services\Interfaces\IGrossIncomeCalculator.cs" />
+    <Compile Include="Services\Interfaces\ITaxesDeductionCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

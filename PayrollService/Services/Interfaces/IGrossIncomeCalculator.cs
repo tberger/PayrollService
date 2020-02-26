@@ -2,6 +2,6 @@
 {
     public interface IGrossIncomeCalculator
     {
-        decimal Calculate(decimal hoursWorked, decimal hourlyRate);
+        decimal CalculateGrossIncome(decimal hoursWorked, decimal hourlyRate);
     }
 }
