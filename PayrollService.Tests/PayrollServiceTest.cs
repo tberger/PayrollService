@@ -74,5 +74,25 @@ namespace PayrollService.Tests
             // Assert
             Assert.AreEqual(countryCode, result.Content.CountryCode);
         }
+
+        [TestMethod]
+        [DataRow(10, 10, 100)]
+        [DataRow(20, 20, 400)]
+        [DataRow(40, 100, 4000)]
+        public void PayrollService_ShouldReturnGrossIncome(
+            double hoursWorked, 
+            double hourlyRate, 
+            double expectedGrossIncome)
+        {
+            // Arrange
+            var controller = new PayrollServiceController();
+
+            // Acr
+            var result = controller.Get("DEU", (decimal)hoursWorked, (decimal)hourlyRate) 
+                as OkNegotiatedContentResult<IncomeInformation>;
+
+            // Assert
+            Assert.AreEqual((decimal)expectedGrossIncome, result.Content.GrossIncome);
+        }
     }
 }

@@ -23,7 +23,8 @@ namespace PayrollService.Controllers
             }
             return Ok(new IncomeInformation
             {
-                CountryCode = countryCode
+                CountryCode = countryCode,
+                GrossIncome = hourlyRate * hoursWorked
             });
         }
     }
