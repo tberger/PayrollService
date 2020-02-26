@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PayrollService.Controllers;
+using PayrollService.Models;
+using System.Web.Http.Results;
 
 namespace PayrollService.Tests
 {
@@ -23,10 +25,23 @@ namespace PayrollService.Tests
             var controller = new PayrollServiceController();
 
             // Acr
-            var result = controller.Get("DEU");
+            var result = controller.Get("DEU", 10m, 10m);
 
             // Assert
             Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void PayrollService_ShouldReturnCorrectType()
+        {
+            // Arrange
+            var controller = new PayrollServiceController();
+
+            // Acr
+            var result = controller.Get("DEU", 10m, 10m) ;
+
+            // Assert
+            Assert.IsInstanceOfType(result, typeof(OkNegotiatedContentResult<IncomeInformation>));
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using PayrollService.Models;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace PayrollService.Controllers
 {
@@ -6,9 +8,13 @@ namespace PayrollService.Controllers
     {
         [HttpGet]
         [Route("api/PayrollService/{countryCode}")]
-        public IHttpActionResult Get(string countryCode)
+        [ResponseType(typeof(IncomeInformation))]
+        public IHttpActionResult Get(
+            string countryCode, 
+            [FromUri]decimal hoursWorked, 
+            [FromUri]decimal hourlyRate)
         {
-            return Ok();
+            return Ok(new IncomeInformation());
         }
     }
 }
