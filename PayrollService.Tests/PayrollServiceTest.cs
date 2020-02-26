@@ -7,13 +7,26 @@ namespace PayrollService.Tests
     public class PayrollServiceTest
     {
         [TestMethod]
-        public void ThereShouldBeAPayrollServiceController()
+        public void PayrollService_ShouldExist()
         {
             // Arrange
             var controller = new PayrollServiceController();
 
             // Assert
             Assert.IsNotNull(controller);
+        }
+
+        [TestMethod]
+        public void PayrollService_ShouldHaveAGetMethod()
+        {
+            // Arrange
+            var controller = new PayrollServiceController();
+
+            // Acr
+            var result = controller.Get("DEU");
+
+            // Assert
+            Assert.IsNotNull(result);
         }
     }
 }
