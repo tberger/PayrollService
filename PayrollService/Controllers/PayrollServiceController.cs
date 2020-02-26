@@ -44,7 +44,8 @@ namespace PayrollService.Controllers
             {
                 CountryCode = countryCode,
                 GrossIncome = grossIncome,
-                TaxesDeduction = taxesDeduction
+                TaxesDeduction = taxesDeduction,
+                NetIncome = grossIncome - taxesDeduction
             });
         }
     }
