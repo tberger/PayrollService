@@ -108,8 +108,13 @@
     <Compile Include="Models\IncomeInformation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IncomeCalculator.cs" />
+    <Compile Include="Services\Interfaces\ICountryTaxCalculator.cs" />
     <Compile Include="Services\Interfaces\IGrossIncomeCalculator.cs" />
+    <Compile Include="Services\Interfaces\ITaxCalculatorFactory.cs" />
     <Compile Include="Services\Interfaces\ITaxesDeductionCalculator.cs" />
+    <Compile Include="Services\ItalianTaxDeductionCalculator.cs" />
+    <Compile Include="Services\SpainTaxDeductionCalculator.cs" />
+    <Compile Include="Services\TaxCalculatorFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

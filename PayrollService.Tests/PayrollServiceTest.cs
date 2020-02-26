@@ -22,6 +22,7 @@ namespace PayrollService.Tests
                     builder.RegisterType<PayrollServiceController>().As<PayrollServiceController>();
                     builder.RegisterType<IncomeCalculator>().As<IGrossIncomeCalculator>();
                     builder.RegisterType<IncomeCalculator>().As<ITaxesDeductionCalculator>();
+                    builder.RegisterType<TaxCalculatorFactory>().As<ITaxCalculatorFactory>();
 
                     var container = builder.Build();
 
