@@ -14,6 +14,7 @@ namespace PayrollService.Services
                 case "ESP":
                     return new SpainTaxDeductionCalculator();
                 case "DEU":
+                    return new GermanTaxDeductionCalculator();
                 default:
                     throw new NotImplementedException();
             }

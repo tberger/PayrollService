@@ -113,6 +113,7 @@
     <Compile Include="Services\Interfaces\ITaxCalculatorFactory.cs" />
     <Compile Include="Services\Interfaces\ITaxesDeductionCalculator.cs" />
     <Compile Include="Services\ItalianTaxDeductionCalculator.cs" />
+    <Compile Include="Services\GermanTaxDeductionCalculator.cs" />
     <Compile Include="Services\SpainTaxDeductionCalculator.cs" />
     <Compile Include="Services\TaxCalculatorFactory.cs" />
   </ItemGroup>
